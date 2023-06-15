@@ -1,14 +1,14 @@
 pipeline {
   agent any
   tools { 
-        maven 'Maven_3.5.2'
+        maven 'Maven_3_5_2'  
     }
    stages{
     stage('CompileandRunSonarAnalysis') {
             steps {	
-		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=asgnolet7app -Dsonar.organization=asgnolet7app -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=74dcccba36d9c7bc7cd0093ec1c79b42a021da5e'
+		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=jenkinsrun -Dsonar.organization=jenkinsrun -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=b92f14d4718afe6fa5a8c793ed68ec7e09a446e0'
 			}
-    }
+      } 
 
 	stage('RunSCAAnalysisUsingSnyk') {
             steps {		
@@ -16,13 +16,13 @@ pipeline {
 					sh 'mvn snyk:test -fn'
 				}
 			}
-    }
+    }		
 
 	stage('Build') { 
             steps { 
                withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
                  script{
-                 app =  docker.build("asg")
+                 app =  docker.build("nolet7")
                  }
                }
             }
